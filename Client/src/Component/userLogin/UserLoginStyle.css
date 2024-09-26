@@ -1,0 +1,22 @@
+.Header{
+    color: brown;
+}
+
+.NewHere span{
+    color:blue;
+    cursor: pointer;
+}
+
+.showPassword{
+    padding-left: 75px;
+    font-size: small;
+}
+
+#asterisk{
+    color: red;
+}
+
+.emailInput{
+    height: 2rem;
+    width: 150px;
+}

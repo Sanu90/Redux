@@ -1,0 +1,12 @@
+.Header{
+    color: brown;
+}
+
+#asterisk{
+    color:red;
+}
+
+.goBacktoLogin span{
+    cursor: pointer;
+    color:blue;
+}
