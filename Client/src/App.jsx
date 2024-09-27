@@ -1,7 +1,7 @@
 import "./App.css";
 import UserLogin from "./Component/userLogin/UserLogin";
 import UserRegister from "./Component/userRegister/UserRegister";
-import AdminLogin from "./Component/AdminLogin";
+import AdminLogin from "./Component/AdminLogin/AdminLogin";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

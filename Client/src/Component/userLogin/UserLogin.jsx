@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "./UserLoginStyle.css";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 function UserLogin() {
@@ -10,6 +9,12 @@ function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
 
   const signupNavigate = useNavigate(null);
+  const loginRef = useRef("");
+
+  useEffect(() => {
+    console.log("useEffect");
+    loginRef.current.focus();
+  }, []);
 
   // let hello = () => {
   //   console.log("check box is clicked");
@@ -30,6 +35,7 @@ function UserLogin() {
       </label>
       <br></br>
       <input
+        ref={loginRef}
         // className="emailInput"
         type="email"
         // id="email"

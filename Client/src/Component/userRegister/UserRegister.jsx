@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "./userRegisterStyle.css";
 import { useNavigate } from "react-router";
@@ -9,13 +9,25 @@ function UserRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const loginNavigate = useNavigate(null);
+  const registerRef = useRef("");
+
+  useEffect(() => {
+    registerRef.current.focus();
+  }, []);
+
+  const register = () => {
+    setError("error message");
+    // console.log("register button is clicked");
+    // e.preventDefault();
+  };
 
   return (
     <div className="registerForm">
       <h2 className="Header">User Register</h2>
-      <form>
+      <form onSubmit={register}>
         <label>
           Please use a Username<sup id="asterisk">*</sup>
         </label>
@@ -24,8 +36,10 @@ function UserRegister() {
           type="text"
           placeholder="Username"
           value={username}
+          ref={registerRef}
           onChange={(e) => setUsername(e.target.value)}
         />
+        {error && <p>{error}</p>}
 
         <br />
         <br />
@@ -79,25 +93,22 @@ function UserRegister() {
 
         <br />
         <br />
-        <Button
-          variant="contained"
-          color="primary"
-          //   onClick={login}
-        >
+        <Button variant="contained" color="primary" onClick={register}>
           Register
         </Button>
-        <br />
-        <p className="goBacktoLogin">
-          Already a user?{" "}
-          <span onClick={() => {
-              loginNavigate("/");
-            }}
-          >
-            Login
-          </span>
-          .
-        </p>
       </form>
+      <br />
+      <p className="goBacktoLogin">
+        Already a user?{" "}
+        <span
+          onClick={() => {
+            loginNavigate("/");
+          }}
+        >
+          Login
+        </span>
+        .
+      </p>
     </div>
   );
 }
