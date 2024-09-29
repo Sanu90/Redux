@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "./userRegisterStyle.css";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function UserRegister() {
   const [username, setUsername] = useState("");
@@ -19,10 +20,15 @@ function UserRegister() {
   }, []);
 
   const register = () => {
-    setError("error message");
+    toast.error("Invalid", {
+      position: "top-right",
+    });
+
     // console.log("register button is clicked");
     // e.preventDefault();
   };
+
+ 
 
   return (
     <div className="registerForm">
@@ -37,7 +43,11 @@ function UserRegister() {
           placeholder="Username"
           value={username}
           ref={registerRef}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={
+            (e) =>{e}
+
+            // setUsername(e.target.value)
+          }
         />
         {error && <p>{error}</p>}
 
@@ -107,7 +117,6 @@ function UserRegister() {
         >
           Login
         </span>
-        .
       </p>
     </div>
   );

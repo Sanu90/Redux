@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "./UserLoginStyle.css";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function UserLogin() {
   const [email, setEmail] = useState("");
@@ -16,29 +17,23 @@ function UserLogin() {
     loginRef.current.focus();
   }, []);
 
-  // let hello = () => {
-  //   console.log("check box is clicked");
-  // };
+  let login = () => {
+    toast.error("Sure?", {
+      position: "top-right",
+    });
+    console.log("check box is clicked");
+  };
 
   return (
     <>
       <h2 className="Header">User Login</h2>
-      {/* <Button
-        variant="contained"
-        color="warning"
-        // style={{ backgroundColor: "black" }}
-      >
-        Hello world
-      </Button> */}
       <label htmlFor="email">
         Enter your email<sup id="asterisk">*</sup>
       </label>
       <br></br>
       <input
         ref={loginRef}
-        // className="emailInput"
         type="email"
-        // id="email"
         placeholder="Email Address"
         value={email}
         name="email"
@@ -70,7 +65,7 @@ function UserLogin() {
       />
       <br />
       <br />
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={login}>
         Login
       </Button>
       <p className="NewHere">
