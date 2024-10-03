@@ -2,7 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-const PORT = 1100;
+require("dotenv").config();
+const user = require("./model/userModel");
+
+const port = process.env.PORT || 2200;
 
 app.use(bodyParser.json());
 
@@ -12,6 +15,6 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
-app.listen(PORT, () => {
-  console.log(`server at http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`server at http://localhost:${port}`);
 });
