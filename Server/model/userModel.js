@@ -28,6 +28,7 @@ const userData = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    unique: true,
   },
 
   password: {
@@ -35,7 +36,23 @@ const userData = new mongoose.Schema({
     required: true,
     trim: true,
   },
+
+  image: {
+    type: String,
+    trim: true,
+  },
+
+  isAdmin: {
+    type: Boolean,
+    trim: true,
+    required: true,
+  },
+  Date: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
 });
 
-const user = mongoose.model("user", userData);
-module.exports = user;
+module.exports = mongoose.model("user", userData);
+// module.exports = user;
