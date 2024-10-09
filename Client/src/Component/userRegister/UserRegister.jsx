@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "./userRegisterStyle.css";
 import { useNavigate } from "react-router";
@@ -21,36 +21,69 @@ function UserRegister() {
     registerRef.current.focus();
   }, []);
 
+  const formValidation = {};
   const register = async (e) => {
     e.preventDefault();
     console.log("clicked register-- an event", e);
 
-    const formValidation = {};
+    //const formValidation = {};
     // if (Object.keys(formValidation).length === 4) {
     //   console.log("hjjhhjjhhj");
     // }
 
-    if (!username) {
-      formValidation.usernameError = "Please enter username";
-    }
-    if (username && username.length < 5) {
-      formValidation.usernameError = "Username should be at least 5 characters";
-    }
-    if (mobile.length != 10) {
-      formValidation.mobileError = "Please enter valid 10 digit mobile number";
-    }
-    if (!email) {
-      formValidation.emailError = "Please enter email address";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      formValidation.emailError = "Invalid email format";
-    }
-    if (password.length < 5) {
-      formValidation.passwordError = "Password should be at least 5characters.";
+    if (!(username && mobile && email && password)) {
+      toast.error(
+        "All fields are mandatory.",
+        { autoClose: 1000 },
+        {
+          position: "top-right",
+        }
+      );
+    } else {
+      if (!username) {
+        formValidation.usernameError = "Please enter username";
+      }
+      if (username && username.length < 5) {
+        formValidation.usernameError =
+          "Username should be at least 5 characters";
+      }
+      if (mobile.length != 10) {
+        formValidation.mobileError =
+          "Please enter valid 10 digit mobile number";
+      }
+      if (!email) {
+        formValidation.emailError = "Please enter email address";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        formValidation.emailError = "Invalid email format";
+      }
+      if (password.length < 5) {
+        formValidation.passwordError =
+          "Password should be at least 5characters.";
+      }
+
+      setError(formValidation);
     }
 
-    setError(formValidation);
+    // if (!username) {
+    //   formValidation.usernameError = "Please enter username";
+    // }
+    // if (username && username.length < 5) {
+    //   formValidation.usernameError = "Username should be at least 5 characters";
+    // }
+    // if (mobile.length != 10) {
+    //   formValidation.mobileError = "Please enter valid 10 digit mobile number";
+    // }
+    // if (!email) {
+    //   formValidation.emailError = "Please enter email address";
+    // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    //   formValidation.emailError = "Invalid email format";
+    // }
+    // if (password.length < 5) {
+    //   formValidation.passwordError = "Password should be at least 5characters.";
+    // }
 
     // setError(formValidation);
+
     console.log("formValidation -->", formValidation);
 
     if (Object.keys(formValidation).length === 0) {
@@ -95,7 +128,8 @@ function UserRegister() {
     }
   };
 
-  console.log("1111error state-->", error);
+  //console.log("1111error state-->", error);
+  //console.log("mobile", mobile);
 
   useEffect(() => {
     // If there is a username error, clear it after 2sec
@@ -129,6 +163,15 @@ function UserRegister() {
     }
   }, [error.emailError]);
 
+  // useEffect(() => {
+  //   // If there is a email error
+  //   if (error.emailError) {
+  //     toast.error("Please check the email format.", {
+  //       position: "top-right",
+  //     });
+  //   }
+  // }, [error.emailError]);
+
   useEffect(() => {
     // If there is a password error, clear it after 2sec
     if (error.passwordError) {
@@ -154,26 +197,41 @@ function UserRegister() {
           ref={registerRef}
           onChange={(e) => setUsername(e.target.value)}
         />
-
         <br />
 
+        {error.usernameError ? (
+          <span className="errorPtag">{error.usernameError}</span>
+        ) : (
+          ""
+        )}
         <br />
         <label>
-          Your Mobile Number <sup id="asterisk">*</sup>
+          Your Mobile Number<sup id="asterisk">*</sup>
         </label>
         <br />
         <input
-          type="number"
+          type="text"
           placeholder="Mobile number"
           value={mobile}
           pattern="[1-9]{1}[0-9]{9}"
-          onChange={(e) => setMobile(e.target.value)}
+          maxLength={10}
+          onChange={(e) => {
+            const enteredValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+            if (enteredValue.length <= 10) {
+              setMobile(enteredValue);
+            }
+          }}
         />
-        <br />
 
         <br />
+        {error.mobileError ? (
+          <span className="errorPtag">{error.mobileError}</span>
+        ) : (
+          ""
+        )}
+        <br />
         <label>
-          Enter your email <sup id="asterisk">*</sup>
+          Enter your Email<sup id="asterisk">*</sup>
         </label>
         <br />
         <input
@@ -183,10 +241,14 @@ function UserRegister() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <br />
-
+        {error.emailError ? (
+          <span className="errorPtag">{error.emailError}</span>
+        ) : (
+          ""
+        )}
         <br />
         <label>
-          Enter your Password <sup id="asterisk">*</sup>
+          Enter your Password<sup id="asterisk">*</sup>
         </label>
         <br />
         <input
@@ -196,8 +258,12 @@ function UserRegister() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
+        {error.passwordError ? (
+          <span className="errorPtag">{error.passwordError}</span>
+        ) : (
+          ""
+        )}
 
-        <br />
         <label htmlFor="check" className="showPassword">
           Show Password
         </label>
@@ -229,22 +295,22 @@ function UserRegister() {
           Login
         </span>
       </p>
-      {error.usernameError ? (
+      {/* {error.usernameError ? (
         <span className="errorPtag">{error.usernameError}</span>
       ) : (
         ""
-      )}
-      {error.mobileError ? (
+      )} */}
+      {/* {error.mobileError ? (
         <p className="errorPtag">{error.mobileError}</p>
       ) : (
         ""
-      )}
-      {error.emailError ? <p className="errorPtag">{error.emailError}</p> : ""}
-      {error.passwordError ? (
-        <p className="errorPtag">{error.passwordError}</p>
+      )} */}
+      {/* {error.emailError ? <p className="errorPtag">{error.emailError}</p> : ""} */}
+      {/* {error.passwordError ? (
+        <span className="errorPtag">{error.passwordError}</span>
       ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 }

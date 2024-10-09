@@ -1,14 +1,31 @@
 import { createStore } from "redux";
 
-const initialValue = {};
+const initialValue = {
+  isAuth: false,
+  user: null,
+};
 
 function appReducer(prevState = initialValue, action) {
-  switch (action.type) {
-    case "a":
-      return {};
+  console.log("is appReducer executed??", action);
 
-    case "b":
-      return {};
+  switch (action.type) {
+    case "login":
+    console.log("response.data.data",action.payload);
+    
+      return {
+        ...prevState,
+        isAuth: true,
+        user: action.payload,
+      };
+
+    case "logout":
+      return {
+        ...prevState,
+        isAuth: false,
+      };
+
+    default:
+      return prevState;
   }
 }
 

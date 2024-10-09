@@ -1,6 +1,7 @@
 import "./App.css";
 import UserLogin from "./Component/userLogin/UserLogin";
 import UserRegister from "./Component/userRegister/UserRegister";
+import UserHome from "./Component/userHome/userHome";
 import AdminLogin from "./Component/AdminLogin/AdminLogin";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UserLogin />} />
           <Route path="/register" element={<UserRegister />} />
+          <Route path="/home" element={<UserHome />} />
           <Route path="/admin" element={<AdminLogin />} />
           {/* <Route path="/admin/dashboard" element={} /> */}
         </Routes>
