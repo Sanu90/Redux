@@ -65,6 +65,10 @@ function UserLogin() {
       const loginData = new FormData();
       loginData.append("email", email);
       loginData.append("password", pass);
+      console.log("loginData");
+      for (let pair of loginData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
 
       try {
         const response = await axios({
@@ -89,11 +93,24 @@ function UserLogin() {
 
         console.log("Response after user hit login button", response);
       } catch (error) {
-        if (error.response) {
-          if (error.response.status === 400) {
-            toast.error(error.response.data, { position: "top-right" });
-          }
+        console.log("heleo testing--error");
+        if (error.message == "Network Error") {
+          toast.error("Server is down. Please try later.", {
+            position: "top-center",
+          });
         }
+        if (error.status === 400) {
+          console.log(400);
+          toast.error(error.response.data, { position: "top-right" });  
+        }
+
+        // if (error.response) {
+        //   console.log("checkng this----working or not");
+
+        //   if (error.response.status === 400) {
+        //     toast.error(error.response.data, { position: "top-right" });
+        //   }
+        // }
         console.log("error in user login", error);
       }
     }

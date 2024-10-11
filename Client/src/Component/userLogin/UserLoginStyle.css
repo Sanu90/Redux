@@ -30,8 +30,12 @@ body {
 }
 
 .abc123{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color:darkgray;
-      border: 5px dashed;
+      border: 5px outset;
+      
   margin: auto;
   width: 50%;
   padding: 10px;

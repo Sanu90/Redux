@@ -13,11 +13,12 @@
 
 .errorPtag{
     color: red;
+    font-size: small;
 }
 
 .registerForm{
     background-color:darkgray;
-      border: 5px dashed;
+      border: 5px inset;
   margin: auto;
   width: 50%;
   padding: 10px;

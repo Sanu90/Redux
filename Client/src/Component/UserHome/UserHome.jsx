@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserHomeStyle.css";
 import ProfileImage from "../ProfileImage/ProfileImage";
+import Time from "../Time/Time";
+import UserEdit from "../UserEdit/UserEdit";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,12 +13,12 @@ function UserHome() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const isAuth = useSelector((state) => {
-    return state.isAuth;
-  });
-
+  const dateFromRedux = useSelector((state) => state.user.Date);
+  const isAuth = useSelector((state) => state.isAuth);
   const token = localStorage.getItem("token111");
+
   console.log("token is-->", token);
+
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
@@ -45,29 +47,48 @@ function UserHome() {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch, navigate]);
+
+  const formattedDate = dateFromRedux
+    ? new Date(dateFromRedux).toLocaleDateString()
+    : "No Date Available";
+
+  if (!user || !user.userName) {
+    return <p>Loading...</p>;
+  }
+
+  const editProfile = async () => {
+    navigate("/editProfile");
+  };
+
+  const logOut = async () => {
+    localStorage.setItem("token", "");
+    dispatch({
+      type: "logout",
+    });
+    window.location.href = "/";
+  };
 
   return (
     <>
-      <h2 style={{ color: "white" }}>User Home</h2>
+      <h2>Welcome {user.userName || "Guest"}</h2>
+      {/* <Time /> */}
       <div className="parent">
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-          className="logoutButton"
-        >
-          LogOut
+        <button onClick={logOut} className="logoutButton">
+          Log out
         </button>
         <ProfileImage />
         <div className="userInfo">
-          <h2>Name: {user.userName}</h2>
-          <h4>Email: {user.email}</h4>
-          <h4>Contact: {user.mobile}</h4>
-          <button onClick={""} className="editButton">
-            EditUser
-          </button>{" "}
+          <h2>Name: {user.userName || "No Name"}</h2>
+          <h4>Email: {user.email || "No Email"}</h4>
+          <h4>Contact: {user.mobile || "No Contact"}</h4>
+
+          <button onClick={editProfile} className="editButton">
+            Edit Profile
+          </button>
         </div>
+        <p></p>
+        <code>Profile created: {formattedDate}</code>
       </div>
     </>
   );

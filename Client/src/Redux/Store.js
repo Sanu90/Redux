@@ -10,13 +10,16 @@ function appReducer(prevState = initialValue, action) {
 
   switch (action.type) {
     case "login":
-    console.log("response.data.data",action.payload);
-    
+      console.log("response.data.data", action.payload);
+
       return {
         ...prevState,
         isAuth: true,
         user: action.payload,
       };
+
+    case "imageUpdate":
+      return { ...prevState, isAuth: true, user: action.payload };
 
     case "logout":
       return {

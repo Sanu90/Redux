@@ -19,6 +19,10 @@ function UserRegister() {
 
   useEffect(() => {
     registerRef.current.focus();
+    toast(
+      "We are happy to have you onboard. Please fill the details and join.",
+      { autoClose: 5000, position: "top-center" }
+    );
   }, []);
 
   const formValidation = {};
@@ -34,7 +38,7 @@ function UserRegister() {
     if (!(username && mobile && email && password)) {
       toast.error(
         "All fields are mandatory.",
-        { autoClose: 1000 },
+        { autoClose: 1500 },
         {
           position: "top-right",
         }
@@ -57,8 +61,7 @@ function UserRegister() {
         formValidation.emailError = "Invalid email format";
       }
       if (password.length < 5) {
-        formValidation.passwordError =
-          "Password should be at least 5characters.";
+        formValidation.passwordError = "Use atleast 5characters.";
       }
 
       setError(formValidation);
@@ -113,14 +116,18 @@ function UserRegister() {
           });
         }
       } catch (err) {
+        console.log("heleo testing--error register");
         if (err.response) {
           if (err.response.status === 400) {
             toast.error(err.response.data, { position: "top-right" });
           } else {
             console.log("inner else part executed");
           }
-        } else {
+        } else if (err.message == "Network Error") {
           console.log("outer else part executed");
+          toast.error("Server is down. Please try later.", {
+            position: "top-center",
+          });
         }
 
         console.log("error console", err);
@@ -263,7 +270,7 @@ function UserRegister() {
         ) : (
           ""
         )}
-
+        <br></br>
         <label htmlFor="check" className="showPassword">
           Show Password
         </label>
