@@ -97,31 +97,43 @@ const home = async (req, res) => {
 };
 
 const imageUpload = async (req, res) => {
-  try{
+  try {
     console.log("imageUpload");
-  console.log(req.file);
-  console.log(req.body.userID);
+    console.log(req.file);
+    console.log(req.body.userID);
 
-  if (req.file) {
-    const path = req.file.path.replace(/\\/g, "/");
-    const newPath = path.replace(
-      "S:/Brototype/Week 20-React3/Redux/Server",
-      "http://localhost:${port}"
-    );
-    console.log("newPath-->", newPath, port);
-    const imageUpdate = await userModel.updateOne(
-      { _id: req.body.userID },
-      { image: newPath }
-    );
-    console.log("imageUpdate-->", imageUpdate);
-  }
-  const data = await userModel.findOne({ _id: req.body.userID });
-  console.log("DATA", data);
-  res.json({ message: "profile picture updated", data: data });
-  }catch(error){
+    if (req.file) {
+      const path = req.file.path.replace(/\\/g, "/");
+      const newPath = path.replace(
+        "S:/Brototype/Week 20-React3/Redux/Server",
+        "http://localhost:${port}"
+      );
+      console.log("newPath-->", newPath, port);
+      const imageUpdate = await userModel.updateOne(
+        { _id: req.body.userID },
+        { image: newPath }
+      );
+      console.log("imageUpdate-->", imageUpdate);
+    }
+    const data = await userModel.findOne({ _id: req.body.userID });
+    console.log("DATA", data);
+    res.json({ message: "profile picture updated", data: data });
+  } catch (error) {
     console.log("Error happened at imageUpload on userController", error);
   }
-  
 };
 
-module.exports = { register, login, home, imageUpload };
+const profileUpdate = async (req, res) => {
+  console.log("PROFILE UPDATE");
+  console.log(req.body);
+  const updateUser = await userModel.updateOne(
+    { email: req.body.email },
+    { userName: req.body.name, mobile: req.body.mobile }
+  );
+  console.log("Updated user data", updateUser);
+  const DataAfterUpdate = await userModel.findOne({ email: req.body.email });
+  console.log("DataAfterUpdate", DataAfterUpdate);
+  res.json({ msg: "data updated success", data: DataAfterUpdate });
+};
+
+module.exports = { register, login, home, imageUpload, profileUpdate };

@@ -8,7 +8,12 @@ const user = require("./model/userModel");
 const port = process.env.PORT;
 app.use(bodyParser.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:2200", 
+    credentials: true, 
+  })
+);
 app.use(bodyParser.json());
 
 // const adminRoute = require("./route/admin");
