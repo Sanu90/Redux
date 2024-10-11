@@ -5,13 +5,18 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function UserLogin() {
   const location = useLocation();
   const navigate = useNavigate(null);
   const loginRef = useRef("");
   const dispatch = useDispatch();
+
+  const isAuth = useSelector((state) => state.isAuth);
+  console.log("user isAuth", isAuth);
+  const token = localStorage.getItem("token111");
+  console.log("token in login page", token);
 
   const successMessage = location.state?.message || "";
 
@@ -23,7 +28,7 @@ function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
   // const [error, setError] = useState("");
 
-  // axios.defaults.withCredentials = true;  // Setting Axios requests as true to include credentials (cookies) for cors.
+  axios.defaults.withCredentials = true;  // Setting Axios requests as true to include credentials (cookies) for cors.
 
   useEffect(() => {
     console.log("useEffect");
@@ -61,7 +66,7 @@ function UserLogin() {
         }
       );
     } else {
-      console.log("login logic is processed"); /// working till here... then error happens
+      console.log("login logic is processed"); 
       const loginData = new FormData();
       loginData.append("email", email);
       loginData.append("password", pass);
@@ -101,7 +106,7 @@ function UserLogin() {
         }
         if (error.status === 400) {
           console.log(400);
-          toast.error(error.response.data, { position: "top-right" });  
+          toast.error(error.response.data, { position: "top-right" });
         }
 
         // if (error.response) {

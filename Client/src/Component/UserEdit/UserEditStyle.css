@@ -30,3 +30,11 @@
     height: 15px;
     cursor: pointer;   
 }
+
+.spinner{
+    color: brown;
+}
+
+.blood{
+    font-family:cursive;
+}

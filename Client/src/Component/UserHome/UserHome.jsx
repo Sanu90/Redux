@@ -62,11 +62,12 @@ function UserHome() {
   };
 
   const logOut = async () => {
-    localStorage.setItem("token", "");
+    localStorage.removeItem("token111");
     dispatch({
       type: "logout",
     });
-    window.location.href = "/";
+    navigate("/");
+    //window.location.href = "/";
   };
 
   return (
