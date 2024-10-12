@@ -108,7 +108,7 @@ const UserEdit = () => {
     }
   };
 
-  console.log("hey blood", blood);
+  console.log("blood", blood);
 
   return (
     <div>
@@ -158,15 +158,17 @@ const UserEdit = () => {
               id="blood"
               className="blood"
               value={blood}
-              onChange={(v) => setBlood(v)}
+              onChange={(event) => {
+                setBlood(event.target.value);
+              }}
             >
               <option defaultValue>Choose One</option>
               <option value="A+">A+</option>
-              <option value="A+">B+</option>
-              <option value="A+">O+</option>
-              <option value="A+">A-</option>
-              <option value="A+">B-</option>
-              <option value="A+">O-</option>
+              <option value="B+">B+</option>
+              <option value="O+">O+</option>
+              <option value="A-">A-</option>
+              <option value="B-">B-</option>
+              <option value="O-">O-</option>
             </select>
             <br />
             <button className="updateButton">Update</button>
