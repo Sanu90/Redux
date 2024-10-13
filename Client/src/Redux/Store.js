@@ -19,6 +19,8 @@ function appReducer(prevState = initialValue, action) {
       };
 
     case "imageUpdate":
+      console.log("image update appReducer");
+
       return { ...prevState, isAuth: true, user: action.payload };
 
     case "logout":
