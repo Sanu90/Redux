@@ -18,6 +18,7 @@ function UserHome() {
   const token = localStorage.getItem("token111");
 
   console.log("token is-->", token);
+  console.log("store data-->", user);
 
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -83,6 +84,10 @@ function UserHome() {
           <h2>Name: {user.userName || "No Name"}</h2>
           <h4>Email: {user.email || "No Email"}</h4>
           <h4>Contact: {user.mobile || "No Contact"}</h4>
+          
+          {user.bloodGroup && (
+            <h4>Blood Group: {user.bloodGroup || "No BG"}</h4>
+          )}
 
           <button onClick={editProfile} className="editButton">
             Edit Profile

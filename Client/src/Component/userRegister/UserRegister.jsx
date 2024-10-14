@@ -145,7 +145,7 @@ function UserRegister() {
         setError((prevError) => ({ ...prevError, usernameError: "" }));
       }, 2000);
 
-      // Cleanup the timer when the component unmounts or if error changes
+      // Cleanup timer when component unmounts
       return () => clearTimeout(timer);
     }
   }, [error.usernameError]);

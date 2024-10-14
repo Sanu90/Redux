@@ -6,7 +6,9 @@ const initialValue = {
 };
 
 function appReducer(prevState = initialValue, action) {
-  console.log("is appReducer executed??", action);
+  console.log("Reducer");
+
+  console.log("is appReducer executed??", action.type);
 
   switch (action.type) {
     case "login":
@@ -20,13 +22,24 @@ function appReducer(prevState = initialValue, action) {
 
     case "imageUpdate":
       console.log("image update appReducer");
+      console.log(action.payload, "imageUpdate case in store");
 
       return { ...prevState, isAuth: true, user: action.payload };
 
+    case "profileUpdate":
+      console.log("profile update appReducer");
+      return {
+        ...prevState,
+        isAuth: true,
+        user: { ...prevState.user, image: action.payload },
+      };
+
     case "logout":
+      console.log("logged out");
       return {
         ...prevState,
         isAuth: false,
+        user: null,
       };
 
     default:

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import DefaultImage from "../../assets/upload-photo-here.png";
 import editIcon from "../../assets/edit.svg";
 import "./image.css";
@@ -12,6 +12,11 @@ const ProfileImage = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const imagePath = useSelector((state) => state.user.image);
+  const fullImageURL = `http://localhost:2200/${imagePath}`;
+
+  fullImageURL && console.log("fullImageURL", fullImageURL);
+
   const imageUpload = (event) => {
     console.log("inside imageUpload");
     event.preventDefault();
@@ -23,14 +28,12 @@ const ProfileImage = () => {
     try {
       console.log("newImageDisplay------<><>");
       const uploadedFile = fileUploadRef.current.files[0];
-      console.log("uploadedFile--->?>?>?>?>?>?", uploadedFile.name);
+      console.log("uploadedFile--->?>?>?>?>?>?", uploadedFile.name); // works fine
       const cachedURL = URL.createObjectURL(uploadedFile);
-      setPhotoURL(cachedURL);
-
+      setPhotoURL(cachedURL); //works fine. image gets updated in front end for the moment
       console.log("cachedURL++++++++++++++++", cachedURL);
       console.log("testtetsttetsttetsttetsttets");
-
-      console.log("USER DATA FROM STORE", user._id);
+      console.log("USER ID FROM STORE", user._id); // works
       const formData = new FormData();
       formData.append("image", uploadedFile);
       formData.append("userID", user._id);
@@ -52,7 +55,8 @@ const ProfileImage = () => {
 
       console.log(
         "Response received after profile picture update is-->",
-        response.data.data
+        response.data.data,
+        response.data.data.image
       );
 
       dispatch({
@@ -60,11 +64,10 @@ const ProfileImage = () => {
         payload: response.data.data,
       });
 
-      
-
-      console.log("data after updating image in Store is-->", user.image);
-      setPhotoURL(100)
-      //setPhotoURL(user.image)
+      console.log("data after updating image in Store is-->", user);
+      console.log("data individual-->", user.mobile, user.image);
+      //setPhotoURL(100)
+      //setPhotoURL(user.image);
     } catch (error) {
       console.log("Error at newImageDisplay on ProfileImage Controller", error);
     }
@@ -73,7 +76,7 @@ const ProfileImage = () => {
   return (
     <div className="profile-container">
       <img
-        src={photoURL}
+        src={fullImageURL || photoURL}
         alt="profile image"
         className="profile"
       />

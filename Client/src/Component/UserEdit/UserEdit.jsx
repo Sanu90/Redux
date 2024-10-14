@@ -45,19 +45,20 @@ const UserEdit = () => {
     try {
       event.preventDefault();
 
-      if (!(updateName && updateMobile)) {
+      if (!(updateName && updateMobile && blood)) {
         toast.error("Cannot update empty values", {
           autoClose: 2000,
           position: "bottom-center",
         });
       } else {
         if (updateName.length < 5) {
-          toast.error("Minimum of 5 characters required", {
+          toast.error("Username must be minimum of 5 characters", {
             autoClose: 2000,
             position: "bottom-center",
+            style: { width: 450 },
           });
         } else if (updateMobile.length < 10) {
-          toast.error("Mobile number should be 10digit", {
+          toast.error("Mobile number should be 10digits", {
             autoClose: 2000,
             position: "bottom-center",
           });
@@ -65,9 +66,10 @@ const UserEdit = () => {
           updateName === userData.userName &&
           updateMobile === userData.mobile
         ) {
-          toast.error("No changes detected", {
+          toast.error("No changes detected for some fields", {
             autoClose: 2000,
             position: "bottom-center",
+            style: { width: 350 },
           });
         } else {
           setLoading(true);
@@ -78,6 +80,7 @@ const UserEdit = () => {
           formData.append("name", updateName);
           formData.append("email", userData.email);
           formData.append("mobile", updateMobile);
+          formData.append("blood", blood);
 
           const response = await axios({
             url: "http://localhost:1100/user/update-profile",
@@ -88,10 +91,16 @@ const UserEdit = () => {
             data: formData,
           });
 
-          console.log("Response after user updated profile", response);
+          console.log(
+            "Response after user updated profile",
+            response.data.data
+          );
+
           if (response.status === 200) {
+            dispatch({ type: "profileUpdate", payload: response.data.data });
             setTimeout(() => {
               setLoading(false);
+
               navigate("/home");
             }, 3000);
           }
