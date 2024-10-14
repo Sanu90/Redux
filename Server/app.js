@@ -10,16 +10,16 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: "http://localhost:2200", 
-    credentials: true, 
+    origin: "http://localhost:2200",
+    credentials: true,
   })
 );
 app.use(bodyParser.json());
 
-// const adminRoute = require("./route/admin");
+const adminRoute = require("./route/admin");
 const userRoute = require("./route/user");
 
-// app.use("/admin", adminRoute);
+app.use("/admin", adminRoute);
 app.use("/user", userRoute);
 
 app.listen(port, () => {

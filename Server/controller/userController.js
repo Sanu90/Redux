@@ -105,10 +105,10 @@ const imageUpload = async (req, res) => {
     if (req.file) {
       const path = req.file.path.replace(/\\/g, "/");
       const newPath = path.replace(
-        "S:/Brototype/Week 20-React3/Redux/Server",
+        "S:/Brototype/Week20-React3/Redux/Server",
         "http://localhost:${port}"
       );
-      console.log("newPath-->", newPath, port);
+      console.log("newPath-->", newPath);
       const imageUpdate = await userModel.updateOne(
         { _id: req.body.userID },
         { image: newPath }
@@ -128,7 +128,11 @@ const profileUpdate = async (req, res) => {
   console.log(req.body);
   const updateUser = await userModel.updateOne(
     { email: req.body.email },
-    { userName: req.body.name, mobile: req.body.mobile }
+    {
+      userName: req.body.name,
+      mobile: req.body.mobile,
+      bloodGroup: req.body.blood,
+    }
   );
   console.log("Updated user data", updateUser);
   const DataAfterUpdate = await userModel.findOne({ email: req.body.email });
