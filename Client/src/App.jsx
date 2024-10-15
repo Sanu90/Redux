@@ -4,6 +4,7 @@ import UserRegister from "./Component/userRegister/UserRegister";
 import UserHome from "./Component/UserHome/UserHome";
 import UserEdit from "./Component/UserEdit/UserEdit";
 import AdminLogin from "./Component/AdminLogin/AdminLogin";
+import AdminHome from "./Component/AdminDashboard/Home/AdminHome";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +21,7 @@ function App() {
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/editProfile" element={<UserEdit />} />
           <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminHome />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -13,9 +13,36 @@ function AdminLogin() {
   const loginRef = useRef("");
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+  const adminToken = localStorage.getItem("adminToken");
+  console.log("Does adminToken is available?", adminToken);
+  if (adminToken) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${adminToken}`;
+  }
+
   useEffect(() => {
-    console.log("useEffect");
+    console.log("AdminLogin Component useEffect");
     loginRef.current.focus();
+    const fetchData = async () => {
+      try {
+        const authAdmin = await axios.get(
+          "http://localhost:1100/admin/dashboard"
+        );
+        console.log("authAdmin", authAdmin);
+        if (authAdmin.data.success) {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/admin");
+        }
+      } catch (error) {
+        console.error(
+          "Error fetching data in fetchData og AdminLogin component useEffect",
+          error
+        );
+      }
+    };
+
+    fetchData();
   }, []);
 
   const adminLogin = async (e) => {
@@ -53,10 +80,10 @@ function AdminLogin() {
         if (response.data.success) {
           // redirect to admin dashboard //
           localStorage.setItem("adminToken", response.data.adminToken);
-          //navigate("/admin/dashboard");
           console.log("data received", localStorage.getItem("adminToken"));
 
           console.log("Admin will be redirected to dashboard");
+          navigate("/admin/dashboard"); // working till here.
         } else {
           toast.error(response.data.message, {
             position: "top-right",
@@ -72,11 +99,13 @@ function AdminLogin() {
     <>
       <div className="adminOuter">
         <h3 id="hello">Hello Admin !!</h3>
+        <br></br>
         <form onSubmit={adminLogin}>
           <label htmlFor="email">
             Enter your email & password to proceed.<sup id="asterisk">*</sup>
           </label>
-          <br></br>
+          <br />
+          <br />
           <input
             ref={loginRef}
             type="email"
@@ -87,7 +116,6 @@ function AdminLogin() {
           />
           <br />
           <br />
-
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
@@ -95,7 +123,7 @@ function AdminLogin() {
             name="pass"
             onChange={(e) => setPassword(e.target.value)}
           />
-
+          <p></p>
           {showPassword ? (
             <p onClick={() => setShowPassword(false)} className="showPassPTag">
               Hide Password
