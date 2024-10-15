@@ -14,6 +14,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.json());
 
 const adminRoute = require("./route/admin");
