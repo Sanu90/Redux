@@ -1,3 +1,4 @@
+const userModel = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const port = process.env.PORT;
@@ -20,6 +21,8 @@ const validateAdminLogin = async (req, res) => {
       if (err) {
         res.json({ success: false });
       } else {
+        console.log("data data data data", data);
+
         const adminData = await userModel.findOne({ email: data.email });
         next();
         // res.json({ success: true, data: adminData })

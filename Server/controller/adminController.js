@@ -33,15 +33,14 @@ const adminLogin = async (req, res) => {
           const adminToken = jwt.sign(payload, secretKey, options); // create admin JWT key
           console.log("Admin Token", adminToken);
 
-
-          //const token = adminToken; // Token generated above
-          jwt.verify(adminToken, secretKey, (err, decoded) => {
-            if (err) {
-              console.log("Error verifying token:", err);
-            } else {
-              console.log("Decoded token:", decoded);
-            }
-          });
+          // verifying token for internal purpose//
+        //   jwt.verify(adminToken, secretKey, (err, decoded) => {
+        //     if (err) {
+        //       console.log("Error verifying token:", err);
+        //     } else {
+        //       console.log("Decoded token:", decoded);
+        //     }
+        //   });
 
           // response after creating admin JWT
           res.json({
