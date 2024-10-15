@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+// import { persistStore, persistReducer } from "redux-persist";
 
 const initialValue = {
   isAuth: false,

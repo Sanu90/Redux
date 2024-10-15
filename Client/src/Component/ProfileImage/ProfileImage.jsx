@@ -13,9 +13,13 @@ const ProfileImage = () => {
   const dispatch = useDispatch();
 
   const imagePath = useSelector((state) => state.user.image);
-  const fullImageURL = `http://localhost:2200/${imagePath}`;
+  console.log("imagePath---------->", imagePath);
 
-  fullImageURL && console.log("fullImageURL", fullImageURL);
+  const fullImageURL = `http://localhost:1100/${imagePath}`;
+
+  imagePath
+    ? console.log("fullImageURL", fullImageURL)
+    : console.log("DefaultURL", photoURL);
 
   const imageUpload = (event) => {
     console.log("inside imageUpload");
@@ -66,8 +70,6 @@ const ProfileImage = () => {
 
       console.log("data after updating image in Store is-->", user);
       console.log("data individual-->", user.mobile, user.image);
-      //setPhotoURL(100)
-      //setPhotoURL(user.image);
     } catch (error) {
       console.log("Error at newImageDisplay on ProfileImage Controller", error);
     }
@@ -75,11 +77,11 @@ const ProfileImage = () => {
 
   return (
     <div className="profile-container">
-      <img
-        src={fullImageURL || photoURL}
-        alt="profile image"
-        className="profile"
-      />
+      {imagePath ? (
+        <img src={fullImageURL} alt="profile image" className="profile" />
+      ) : (
+        <img src={photoURL} alt="profile image" className="profile" />
+      )}
       <form id="form" encType="multipart/form-data">
         <button type="submit" className="buttonEditIcon" onClick={imageUpload}>
           <img src={editIcon} alt="Edit icon" className="object-cover" />

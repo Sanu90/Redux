@@ -1,63 +1,116 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Button from "@mui/material/Button";
 import "./AdminLoginStyle.css";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 function AdminLogin() {
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const loginRef = useRef("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("useEffect");
     loginRef.current.focus();
   }, []);
 
+  const adminLogin = async (e) => {
+    console.log("admin Login function");
+    e.preventDefault();
+
+    if (!(email && password)) {
+      toast.error(
+        "Email & password required.",
+        { autoClose: 3000 },
+        {
+          position: "top-right",
+        }
+      );
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error(
+        "Invalid email format.",
+        { autoClose: 3000 },
+        {
+          position: "top-right",
+        }
+      );
+    } else {
+      try {
+        console.log("Try block for admin login");
+        const response = await axios({
+          url: "http://localhost:1100/admin/login",
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: { email, password },
+        });
+        console.log("Response Data from AdminLogin", response.data);
+        if (response.data.success) {
+          // redirect to admin dashboard //
+          localStorage.setItem("adminToken", response.data.adminToken);
+          //navigate("/admin/dashboard");
+          console.log("data received", localStorage.getItem("adminToken"));
+
+          console.log("Admin will be redirected to dashboard");
+        } else {
+          toast.error(response.data.message, {
+            position: "top-right",
+          });
+        }
+      } catch (error) {
+        console.log("Error at adminLogin in AdminLogin component", error);
+      }
+    }
+  };
+
   return (
     <>
-      <h2 className="header">Admin Login</h2>
-      <h3 id="hello">Hello Admin !!</h3>
-      <label htmlFor="email">
-        Enter your email<sup id="asterisk">*</sup>
-      </label>
-      <br></br>
-      <input
-        ref={loginRef}
-        type="email"
-        placeholder="Email Address"
-        value={email}
-        name="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br />
-      <br />
-      <label htmlFor="email">
-        Enter your password<sup id="asterisk">*</sup>
-      </label>
-      <br></br>
-      <input
-        type="text"
-        //type={showPassword ? "text" : "password"}
-        placeholder="Password"
-        value={pass}
-        name="pass"
-        onChange={(e) => setPass(e.target.value)}
-      />
-      <br />
+      <div className="adminOuter">
+        <h3 id="hello">Hello Admin !!</h3>
+        <form onSubmit={adminLogin}>
+          <label htmlFor="email">
+            Enter your email & password to proceed.<sup id="asterisk">*</sup>
+          </label>
+          <br></br>
+          <input
+            ref={loginRef}
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <br />
+          <br />
 
-      {/* <label htmlFor="check" className="showPassword">
-        Show Password
-      </label>
-      <input
-        id="check"
-        type="checkbox"
-        value={showPassword}
-        onChange={() => setShowPassword((prev) => !prev)}
-      /> */}
-      <br />
-      <br />
-      <Button variant="contained" color="primary">
-        Login
-      </Button>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            name="pass"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {showPassword ? (
+            <p onClick={() => setShowPassword(false)} className="showPassPTag">
+              Hide Password
+            </p>
+          ) : (
+            <p onClick={() => setShowPassword(true)} className="showPassPTag">
+              Show Password
+            </p>
+          )}
+          <br />
+          <Button variant="contained" color="primary" onClick={adminLogin}>
+            Login
+          </Button>
+        </form>
+      </div>
     </>
   );
 }

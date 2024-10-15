@@ -5,3 +5,23 @@
 #hello{
     color:chocolate;
 }
+
+.adminOuter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:darkgray;
+    border: 5px outset; 
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    width: 360px;
+    height: 340px;   
+}
+
+.showPassPTag{
+    margin-left: 85px;
+    font-size: 10px;
+    cursor: pointer;
+   
+}

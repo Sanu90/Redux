@@ -28,7 +28,7 @@ function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
   // const [error, setError] = useState("");
 
-  axios.defaults.withCredentials = true;  // Setting Axios requests as true to include credentials (cookies) for cors.
+  axios.defaults.withCredentials = true; // Setting Axios requests as true to include credentials (cookies) for cors.
 
   useEffect(() => {
     console.log("useEffect");
@@ -66,7 +66,7 @@ function UserLogin() {
         }
       );
     } else {
-      console.log("login logic is processed"); 
+      console.log("login logic is processed");
       const loginData = new FormData();
       loginData.append("email", email);
       loginData.append("password", pass);

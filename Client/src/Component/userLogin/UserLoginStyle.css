@@ -8,7 +8,7 @@
 }
 
 .showPassword{
-    padding-left: 75px;
+    padding-left: 15px;
     font-size: small;
 }
 
@@ -34,14 +34,12 @@ body {
     flex-direction: column;
     align-items: center;
     background-color:darkgray;
-      border: 5px outset;
-      
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-  width: 300px;
-  height: 350px;
-    
+    border: 5px outset; 
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    width: 300px;
+    height: 350px;   
 }
 
 ::placeholder {
