@@ -1,4 +1,18 @@
-.abc111{
-    background-color:antiquewhite;
+.tableDiv{
+    /* background-color:antiquewhite; */
     height: auto;
+    width: 1000px;
+    margin-left: 8%;
+    margin-top: 3%;
 }
+
+.tableDiv h3{
+    color: red;
+}
+
+.tableDiv table thead tr {
+  background-color: #4CAF50; /* Change this color to what you prefer */
+  color: white; /* For text color */
+}
+
+ textAlign: "center", verticalAlign: "middle"

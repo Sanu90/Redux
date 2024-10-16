@@ -8,16 +8,17 @@ import Navbar from "react-bootstrap/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavBar.css";
 
-const NavBar = () => {
+// eslint-disable-next-line react/prop-types
+const NavBar = ({ onSearch }) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [reload, setReload] = useState(false);
 
   const searchHandle = (e) => {
     const value = e.target.value;
     setSearch(value);
     console.log("search", search);
-
-    //onSearch(value);
+    onSearch(value);
   };
 
   const logout = () => {
@@ -25,6 +26,13 @@ const NavBar = () => {
     //window.location.href = "/admin";
     navigate("/admin");
   };
+
+  const dashboardReload = () => {
+    console.log("dashboardReload clicked");
+    setReload((prev) => !prev);
+    navigate("/admin/dashboard");
+  };
+
   return (
     <Navbar expand="lg" className="bg-secondary">
       <Container fluid>
@@ -36,7 +44,9 @@ const NavBar = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link style={{ color: "white" }}>Home</Nav.Link>
+            <Nav.Link style={{ color: "white" }} onClick={dashboardReload}>
+              Home
+            </Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control
@@ -51,7 +61,7 @@ const NavBar = () => {
               style={{ backgroundColor: "blue", color: "white" }}
               onClick={logout}
             >
-              LogOut
+              Logout
             </Button>
           </Form>
         </Navbar.Collapse>

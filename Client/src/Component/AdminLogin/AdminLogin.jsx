@@ -4,7 +4,6 @@ import "./AdminLoginStyle.css";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
 
 function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -23,12 +22,10 @@ function AdminLogin() {
   useEffect(() => {
     console.log("AdminLogin Component useEffect");
     loginRef.current.focus();
-    const fetchData = async () => {
+    const getData = async () => {
       try {
-        const authAdmin = await axios.get(
-          "http://localhost:1100/admin/dashboard"
-        );
-        console.log("authAdmin", authAdmin);
+        const authAdmin = await axios.get("http://localhost:1100/admin/home");
+        console.log("authAdmin in AdminLogin component", authAdmin);
         if (authAdmin.data.success) {
           navigate("/admin/dashboard");
         } else {
@@ -42,7 +39,7 @@ function AdminLogin() {
       }
     };
 
-    fetchData();
+    getData();
   }, []);
 
   const adminLogin = async (e) => {
