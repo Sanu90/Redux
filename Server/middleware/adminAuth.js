@@ -4,9 +4,9 @@ require("dotenv").config();
 const port = process.env.PORT;
 const ADMIN_SECRET_KEY = process.env.JWT_ADMIN_KEY;
 
-const validateAdminLogin = async (req, res) => {
+const validateAdminLogin = async (req, res, next) => {
   console.log("validateAdminLogin");
-  console.log(req.body, "req.body");
+  console.log(req.headers, "req");
 
   const headers = req.headers.authorization;
   console.log("Headers", headers);

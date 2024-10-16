@@ -33,15 +33,6 @@ const adminLogin = async (req, res) => {
           const adminToken = jwt.sign(payload, secretKey, options); // create admin JWT key
           console.log("Admin Token", adminToken);
 
-          // verifying token for internal purpose//
-        //   jwt.verify(adminToken, secretKey, (err, decoded) => {
-        //     if (err) {
-        //       console.log("Error verifying token:", err);
-        //     } else {
-        //       console.log("Decoded token:", decoded);
-        //     }
-        //   });
-
           // response after creating admin JWT
           res.json({
             success: true,
@@ -67,7 +58,10 @@ const adminLogin = async (req, res) => {
 
 const home = async (req, res) => {
   try {
-    console.log("Admin Home");
+    console.log("----------------->Admin Home<------------->");
+    const userData = await userModel.find({ isAdmin: false });
+    console.log("All user data--->", userData);
+    res.json({ success: true, userData: userData });
   } catch (error) {
     console.log("Error in Home function at adminController", error);
   }

@@ -15,7 +15,7 @@ app.use(
   })
 );
 app.use("/uploads", express.static("uploads"));
-app.use(bodyParser.json());
+
 
 const adminRoute = require("./route/admin");
 const userRoute = require("./route/user");

@@ -8,10 +8,10 @@ console.log(" Admin route.... ");
 
 router.post("/login", adminController.adminLogin);
 router.get(
-  "/dashboard",
+  "/home",
   adminAuthenticate.validateAdminLogin,
   adminController.home
 );
-//router.get("/dashboard", adminAuth.validateAdminLogin)
+// router.get("/dashboard", adminAuth.validateAdminLogin)
 
 module.exports = router;
