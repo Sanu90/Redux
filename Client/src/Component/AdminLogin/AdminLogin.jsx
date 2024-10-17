@@ -87,6 +87,11 @@ function AdminLogin() {
           });
         }
       } catch (error) {
+        //console.log(error.code);
+        if (error.code == "ERR_NETWORK") {
+          toast.error("Server is down. Please try later.");
+        }
+
         console.log("Error at adminLogin in AdminLogin component", error);
       }
     }

@@ -5,6 +5,7 @@ import axios from "axios";
 import NavBar from "../NavBar/NavBar";
 import Body from "../Body/Body";
 import "./Home.css";
+import Swal from "sweetalert2";
 
 const AdminHome = () => {
   const navigate = useNavigate();
@@ -23,6 +24,22 @@ const AdminHome = () => {
   }
 
   useEffect(() => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Signed in successfully",
+    });
+
     const getData = async () => {
       try {
         const authAdmin = await axios.get("http://localhost:1100/admin/home");

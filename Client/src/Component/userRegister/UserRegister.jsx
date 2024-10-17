@@ -21,7 +21,7 @@ function UserRegister() {
     registerRef.current.focus();
     toast(
       "We are happy to have you onboard. Please fill the details and join.",
-      { autoClose: 5000, position: "top-center" }
+      { autoClose: 5000, position: "top-right" }
     );
   }, []);
 

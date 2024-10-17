@@ -85,20 +85,32 @@ function UserLogin() {
           data: loginData,
         });
         console.log("------------>", response.status);
+
         if (response.status == 200) {
           localStorage.setItem("token111", response.data.token);
           console.log("response.data", response.data);
 
           dispatch({
-            type: "login",
+            type: "userLogin",
             payload: response.data.data,
           });
           navigate("/home");
         }
 
-        console.log("Response after user hit login button", response);
+        console.log("Response after user hit login button", response); // working
       } catch (error) {
         console.log("heleo testing--error");
+
+        if (error.status == 401) {
+          toast.error(
+            error.response.data.message,
+            { autoClose: 3000, width: "450px" },
+            {
+              position: "top-right",
+            }
+          );
+        }
+
         if (error.message == "Network Error") {
           toast.error("Server is down. Please try later.", {
             position: "top-center",
@@ -168,6 +180,7 @@ function UserLogin() {
             Login
           </Button>
         </form>
+        <p />
         <p className="NewHere">
           New Here??{" "}
           <span

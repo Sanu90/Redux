@@ -35,7 +35,7 @@ function UserHome() {
           navigate("/");
         } else {
           dispatch({
-            type: "login",
+            type: "userLogin",
             payload: authUser.data.data,
           });
         }
@@ -65,7 +65,7 @@ function UserHome() {
   const logOut = async () => {
     localStorage.removeItem("token111");
     dispatch({
-      type: "logout",
+      type: "userLogout",
     });
     navigate("/");
     //window.location.href = "/";
@@ -84,7 +84,7 @@ function UserHome() {
           <h2>Name: {user.userName || "No Name"}</h2>
           <h4>Email: {user.email || "No Email"}</h4>
           <h4>Contact: {user.mobile || "No Contact"}</h4>
-          
+
           {user.bloodGroup && (
             <h4>Blood Group: {user.bloodGroup || "No BG"}</h4>
           )}
