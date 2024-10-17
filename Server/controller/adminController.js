@@ -67,4 +67,20 @@ const home = async (req, res) => {
   }
 };
 
-module.exports = { adminLogin, home };
+const deleteUser = async (req, res) => {
+  try {
+    console.log("DELETE USER");
+    const userID = req.params;
+    console.log("User ID:", userID.id);
+
+    const dataAfterDeletion = await userModel.findByIdAndDelete({
+      _id: userID.id,
+    });
+    console.log(dataAfterDeletion);
+    res.json({ success: true, data: "admin deleted a user" });
+  } catch (error) {
+    console.log("Error in deleteUser in admin Controller", error);
+  }
+};
+
+module.exports = { adminLogin, home, deleteUser };

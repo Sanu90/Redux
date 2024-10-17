@@ -40,6 +40,14 @@ const login = async (req, res) => {
     console.log("userData", userData);
     if (userData == null) return res.status(400).send("Not a registered user.");
     else if (userData) {
+      console.log("A user is trying to login");
+      if (userData.isAdmin) {
+        console.log("Admin tries to login here.....");
+        return res
+          .status(401)
+          .json({ message: "This is not an Admin portal." });
+      }
+
       const hashPass = await bcrypt.compare(
         req.body.password,
         userData.password
@@ -64,6 +72,19 @@ const login = async (req, res) => {
         res.json({ success: true, token: token, data: userDetails });
       }
     }
+
+    // if (userData.isAdmin == true) {
+    //   console.log("Admin part executed");
+
+    //   return res.json({
+    //     success: false,
+    //     message: "This is not for admin.",
+    //     access: "invalid",
+    //   });
+    // } else {
+    //   console.log("Else part for login .....................");
+
+    // }
   } catch (error) {
     console.log("Error in userController login", error);
   }
