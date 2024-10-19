@@ -25,7 +25,7 @@ const UserEdit = () => {
   const dispatch = useDispatch();
 
   axios.defaults.withCredentials = true;
-  const token = localStorage.getItem("token111");
+  const token = localStorage.getItem("userToken");
   console.log("token in userEdit page", token);
 
   console.log("userData", userData);
@@ -117,6 +117,7 @@ const UserEdit = () => {
     }
   };
 
+  console.log("updateProfile", updateProfile.name);
   console.log("blood", blood);
 
   return (

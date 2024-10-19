@@ -8,7 +8,13 @@ import { createStore } from "redux";
 
 const initialValue = {
   isAuth: false,
-  user: null,
+  user: {
+    userName: null,
+    email: null,
+    mobile: null,
+    bloodGroup: null,
+    Date: null,
+  },
 };
 
 function appReducer(prevState = initialValue, action) {
@@ -24,14 +30,18 @@ function appReducer(prevState = initialValue, action) {
       return {
         ...prevState,
         isAuth: true,
-        user: action.payload,
+        user: { ...prevState.user, ...action.payload },
       };
 
     case "imageUpdate":
       console.log("STORE - image update appReducer");
       console.log(action.payload, "imageUpdate case in store");
 
-      return { ...prevState, isAuth: true, user: action.payload };
+      return {
+        ...prevState,
+        isAuth: true,
+        user: { ...prevState.user, ...action.payload },
+      };
 
     case "profileUpdate":
       console.log("STORE - profile update appReducer");
@@ -46,7 +56,7 @@ function appReducer(prevState = initialValue, action) {
       return {
         ...prevState,
         isAuth: false,
-        user: null,
+        user: initialValue.user,
       };
 
     default:

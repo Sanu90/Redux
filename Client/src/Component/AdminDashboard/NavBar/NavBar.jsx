@@ -12,7 +12,7 @@ import "./NavBar.css";
 const NavBar = ({ onSearch }) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [reload, setReload] = useState(false);
+  // const [reload, setReload] = useState(false);
 
   const searchHandle = (e) => {
     const value = e.target.value;
@@ -23,15 +23,19 @@ const NavBar = ({ onSearch }) => {
 
   const logout = () => {
     localStorage.removeItem("adminToken");
-    //window.location.href = "/admin";
-    navigate("/admin");
+    console.log(
+      "Does admin token available after logout hit?",
+      localStorage.getItem("adminToken")
+    );
+    window.location.href = "/admin";
+    //navigate("/admin", { replace: true });
   };
 
-  const dashboardReload = () => {
-    console.log("dashboardReload clicked");
-    setReload((prev) => !prev);
-    navigate("/admin/dashboard");
-  };
+  // const dashboardReload = () => {
+  //   console.log("dashboardReload clicked");
+  //   setReload((prev) => !prev);
+  //   navigate("/admin/dashboard");
+  // };
 
   return (
     <Navbar expand="lg" className="bg-secondary">
@@ -44,7 +48,7 @@ const NavBar = ({ onSearch }) => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link style={{ color: "white" }} onClick={dashboardReload}>
+            <Nav.Link style={{ color: "white" }} onClick="">
               Home
             </Nav.Link>
           </Nav>

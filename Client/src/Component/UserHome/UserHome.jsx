@@ -15,9 +15,9 @@ function UserHome() {
   const user = useSelector((state) => state.user);
   const dateFromRedux = useSelector((state) => state.user.Date);
   const isAuth = useSelector((state) => state.isAuth);
-  const token = localStorage.getItem("token111");
 
-  console.log("token is-->", token);
+  const token = localStorage.getItem("userToken");
+  console.log("user token is-->", token);
   console.log("store data-->", user);
 
   if (token) {
@@ -34,6 +34,7 @@ function UserHome() {
         if (!authUser.data.success) {
           navigate("/");
         } else {
+          // navigate("/home");
           dispatch({
             type: "userLogin",
             payload: authUser.data.data,
@@ -63,7 +64,7 @@ function UserHome() {
   };
 
   const logOut = async () => {
-    localStorage.removeItem("token111");
+    localStorage.removeItem("userToken");
     dispatch({
       type: "userLogout",
     });

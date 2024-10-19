@@ -7,7 +7,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const Body = ({ searchData }) => {
+  console.log("search Data --->", searchData);
+
   const [userData, setUserData] = useState([]);
+  const [block, setBlock] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -64,11 +67,6 @@ const Body = ({ searchData }) => {
         } catch (error) {
           console.log("Error at swal", error);
         }
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
       }
     });
   };
@@ -126,7 +124,16 @@ const Body = ({ searchData }) => {
                     onClick={(e) => handleButtonClick(e)}
                   >
                     X
-                  </Button>
+                  </Button>{" "}
+                  {/* {block ? (
+                    <Button variant="outline-danger" id={user._id}>
+                      Unblock
+                    </Button>
+                  ) : (
+                    <Button variant="outline-danger" id={user._id}>
+                      Block
+                    </Button>
+                  )} */}
                 </td>
               </tr>
             );

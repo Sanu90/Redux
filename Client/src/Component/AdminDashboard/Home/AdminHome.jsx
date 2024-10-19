@@ -47,7 +47,7 @@ const AdminHome = () => {
         if (authAdmin.data.success) {
           navigate("/admin/dashboard");
         } else {
-          navigate("/admin");
+          navigate("/admin", { replace: true });
           console.log("error");
         }
       } catch (error) {

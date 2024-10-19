@@ -15,8 +15,6 @@ function UserLogin() {
 
   const isAuth = useSelector((state) => state.isAuth);
   console.log("user isAuth", isAuth);
-  const token = localStorage.getItem("token111");
-  console.log("token in login page", token);
 
   const successMessage = location.state?.message || "";
 
@@ -29,9 +27,15 @@ function UserLogin() {
   // const [error, setError] = useState("");
 
   axios.defaults.withCredentials = true; // Setting Axios requests as true to include credentials (cookies) for cors.
+  const token = localStorage.getItem("userToken");
+  console.log("token in user login page", token);
+
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
 
   useEffect(() => {
-    console.log("useEffect");
+    console.log("useEffect in userLogin");
     loginRef.current.focus();
 
     if (successMessage) {
@@ -39,6 +43,21 @@ function UserLogin() {
         setDisplayMessage("");
         navigate("/", { state: {} });
       }, 5000);
+
+      const getData = async () => {
+        try {
+          const authUser = await axios.get("http://localhost:1100/user/home");
+          if (authUser.data.success) {
+            navigate("/");
+          }
+        } catch (error) {
+          console.log(
+            "error in getData of useEffect in user login component",
+            error
+          );
+        }
+      };
+      getData();
 
       return () => {
         clearTimeout(timer);
@@ -87,7 +106,7 @@ function UserLogin() {
         console.log("------------>", response.status);
 
         if (response.status == 200) {
-          localStorage.setItem("token111", response.data.token);
+          localStorage.setItem("userToken", response.data.token); // userToken name changed from token111 to userToken
           console.log("response.data", response.data);
 
           dispatch({
