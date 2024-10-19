@@ -21,9 +21,9 @@ const validateAdminLogin = async (req, res, next) => {
       if (err) {
         res.json({ success: false });
       } else {
-        console.log("data data data data", data);
+        console.log("data ------>>>", data);
 
-        const adminData = await userModel.findOne({ email: data.email });
+        //const adminData = await userModel.findOne({ email: data.email });
         next();
         // res.json({ success: true, data: adminData })
       }

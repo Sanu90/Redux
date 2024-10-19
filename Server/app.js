@@ -11,11 +11,10 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: "http://localhost:2200",
-    credentials: true,
+    credentials: true, // This helps to enable sharing credentials for CORS.
   })
 );
 app.use("/uploads", express.static("uploads"));
-
 
 const adminRoute = require("./route/admin");
 const userRoute = require("./route/user");
