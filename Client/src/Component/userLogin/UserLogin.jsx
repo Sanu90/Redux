@@ -18,7 +18,7 @@ function UserLogin() {
 
   const successMessage = location.state?.message || "";
 
-  console.log("successMessage", successMessage);
+  console.log("successMessage--->", successMessage);
   const [displayMessage, setDisplayMessage] = useState(successMessage);
 
   const [email, setEmail] = useState("");
@@ -42,7 +42,7 @@ function UserLogin() {
       const timer = setTimeout(() => {
         setDisplayMessage("");
         navigate("/", { state: {} });
-      }, 5000);
+      }, 3000);
 
       const getData = async () => {
         try {
@@ -63,7 +63,7 @@ function UserLogin() {
         clearTimeout(timer);
       };
     }
-  }, [successMessage, displayMessage]);
+  }, [successMessage, displayMessage, navigate]);
 
   const login = async (e) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ function UserLogin() {
         console.log("------------>", response.status);
 
         if (response.status == 200) {
-          localStorage.setItem("userToken", response.data.token); // userToken name changed from token111 to userToken
+          localStorage.setItem("userToken", response.data.token);
           console.log("response.data", response.data);
 
           dispatch({

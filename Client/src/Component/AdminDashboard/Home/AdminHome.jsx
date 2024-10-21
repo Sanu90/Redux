@@ -1,9 +1,10 @@
-// import React from "react";
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../NavBar/NavBar";
-import Body from "../Body/Body";
+// import Body from "../Body/Body";
+const Body = React.lazy(() => import("../Body/Body")); // Lazy loading
 import "./Home.css";
 import Swal from "sweetalert2";
 
@@ -61,7 +62,9 @@ const AdminHome = () => {
     <div className="homeforAdmin">
       <NavBar onSearch={handleSearch} />
       <hr />
-      <Body searchData={searchData} />
+      <Suspense fallback={<div>Loading..........</div>}>
+        <Body searchData={searchData} />
+      </Suspense>
     </div>
   );
 };

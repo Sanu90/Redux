@@ -30,11 +30,6 @@ function UserRegister() {
     e.preventDefault();
     console.log("clicked register-- an event", e);
 
-    //const formValidation = {};
-    // if (Object.keys(formValidation).length === 4) {
-    //   console.log("hjjhhjjhhj");
-    // }
-
     if (!(username && mobile && email && password)) {
       toast.error(
         "All fields are mandatory.",
@@ -44,9 +39,6 @@ function UserRegister() {
         }
       );
     } else {
-      if (!username) {
-        formValidation.usernameError = "Please enter username";
-      }
       if (username && username.length < 5) {
         formValidation.usernameError =
           "Username should be at least 5 characters";
@@ -66,26 +58,6 @@ function UserRegister() {
 
       setError(formValidation);
     }
-
-    // if (!username) {
-    //   formValidation.usernameError = "Please enter username";
-    // }
-    // if (username && username.length < 5) {
-    //   formValidation.usernameError = "Username should be at least 5 characters";
-    // }
-    // if (mobile.length != 10) {
-    //   formValidation.mobileError = "Please enter valid 10 digit mobile number";
-    // }
-    // if (!email) {
-    //   formValidation.emailError = "Please enter email address";
-    // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    //   formValidation.emailError = "Invalid email format";
-    // }
-    // if (password.length < 5) {
-    //   formValidation.passwordError = "Password should be at least 5characters.";
-    // }
-
-    // setError(formValidation);
 
     console.log("formValidation -->", formValidation);
 
@@ -111,9 +83,7 @@ function UserRegister() {
         console.log("Response after user registration", response);
         if (response.status == 200) {
           // setUserRegistered("User Registered.");
-          loginNavigate("/", {
-            state: { message: "User Registered. Login to proceed." },
-          });
+          loginNavigate("/", {message: "User Registered. Login to proceed"});
         }
       } catch (err) {
         console.log("heleo testing--error register");
@@ -134,9 +104,6 @@ function UserRegister() {
       }
     }
   };
-
-  //console.log("1111error state-->", error);
-  //console.log("mobile", mobile);
 
   useEffect(() => {
     // If there is a username error, clear it after 2sec
@@ -169,15 +136,6 @@ function UserRegister() {
       return () => clearTimeout(timer);
     }
   }, [error.emailError]);
-
-  // useEffect(() => {
-  //   // If there is a email error
-  //   if (error.emailError) {
-  //     toast.error("Please check the email format.", {
-  //       position: "top-right",
-  //     });
-  //   }
-  // }, [error.emailError]);
 
   useEffect(() => {
     // If there is a password error, clear it after 2sec
@@ -224,9 +182,10 @@ function UserRegister() {
           maxLength={10}
           onChange={(e) => {
             const enteredValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-            if (enteredValue.length <= 10) {
-              setMobile(enteredValue);
-            }
+            setMobile(enteredValue);
+            // if (enteredValue.length <= 10) {
+            //   setMobile(enteredValue);
+            // }
           }}
         />
 
